@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   config?: PortfolioConfig;
   isLoading = true;
   errorMessage = '';
+  isMenuOpen = false; 
 
   constructor(
     private portfolioService: PortfolioService,

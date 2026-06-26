@@ -1,67 +1,111 @@
-<div class="portfolio-wrapper" *ngIf="!isLoading && config">
+<!-- src/app/components/home/home.component.html -->
 
-  <!-- En-tete / Hero -->
-  <header class="hero">
-    <h1>{{ config.profile.businessName }}</h1>
-    <p class="slogan">{{ config.profile.slogan }}</p>
-  </header>
+<div *ngIf="!isLoading && config">
 
-  <!-- Sections dynamiques (A propos, Galerie, etc.) -->
-  <section *ngFor="let section of config.sections; trackBy: trackBySection"
-           class="content-section" [ngClass]="section.type.toLowerCase()">
-    <h2>{{ section.title }}</h2>
-    <h3 *ngIf="section.subtitle">{{ section.subtitle }}</h3>
-    <p *ngIf="section.body" [innerHTML]="section.body"></p>
+  <!-- ===== Navigation sticky ===== -->
+  <nav class="sticky top-0 z-50 bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
 
-    <!-- Galerie d'images -->
-    <div class="gallery" *ngIf="section.type === 'Gallery'">
-      <img *ngFor="let img of section.galleryImages" [src]="img" alt="Photo de la galerie" />
-    </div>
-  </section>
-
-  <!-- Produits / Services groupes par categorie -->
-  <section class="products-section">
-    <h2>Nos Produits &amp; Services</h2>
-    <div *ngFor="let category of (groupProductsByCategory(config.products) | keyvalue)">
-      <h3>{{ category.key }}</h3>
-      <div class="product-grid">
-        <div class="product-card" *ngFor="let item of category.value">
-          <img [src]="item.imageUrl" [alt]="item.title" />
-          <h4>{{ item.title }}</h4>
-          <p>{{ item.description }}</p>
-          <span class="price" *ngIf="item.price">
-            {{ item.price | currency:'EUR' }} / {{ item.priceUnit }}
+        <!-- Logo + nom -->
+        <div class="flex items-center gap-2">
+          <img [src]="config.profile.logoUrl" alt="Logo" class="h-10 w-10 object-contain" />
+          <span class="font-bold text-lg" style="color: var(--color-primary)">
+            {{ config.profile.businessName }}
           </span>
-          <span class="price" *ngIf="!item.price">Sur devis</span>
         </div>
+
+        <!-- Liens desktop -->
+        <div class="hidden md:flex gap-8">
+          <a href="#about" class="text-gray-700 hover:text-[var(--color-primary)] transition">À propos</a>
+          <a href="#gallery" class="text-gray-700 hover:text-[var(--color-primary)] transition">Galerie</a>
+          <a href="#products" class="text-gray-700 hover:text-[var(--color-primary)] transition">Produits</a>
+          <a href="#contact" class="text-gray-700 hover:text-[var(--color-primary)] transition">Contact</a>
+        </div>
+
+        <!-- Bouton hamburger (mobile uniquement) -->
+        <button class="md:hidden text-2xl" (click)="isMenuOpen = !isMenuOpen" aria-label="Menu">
+          ☰
+        </button>
+      </div>
+
+      <!-- Menu mobile déroulant -->
+      <div *ngIf="isMenuOpen" class="md:hidden flex flex-col gap-3 pb-4">
+        <a href="#about" class="text-gray-700" (click)="isMenuOpen = false">À propos</a>
+        <a href="#gallery" class="text-gray-700" (click)="isMenuOpen = false">Galerie</a>
+        <a href="#products" class="text-gray-700" (click)="isMenuOpen = false">Produits</a>
+        <a href="#contact" class="text-gray-700" (click)="isMenuOpen = false">Contact</a>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- Temoignages -->
-  <section class="testimonials" *ngIf="config.testimonials.length">
-    <h2>Avis de nos clients</h2>
-    <div class="testimonial-card" *ngFor="let t of config.testimonials">
-      <p>&laquo; {{ t.comment }} &raquo;</p>
-      <strong>{{ t.authorName }}</strong> — {{ t.rating }}/5
-    </div>
-  </section>
+  <!-- ===== Conteneur principal (avec padding latéral) ===== -->
+  <div class="portfolio-wrapper">
 
-  <!-- Contact / Horaires -->
-  <footer class="contact-section">
-    <h2>Nous contacter</h2>
-    <p>{{ config.profile.address }}, {{ config.profile.city }}</p>
-    <p>{{ config.profile.phone }} — {{ config.profile.email }}</p>
-    <ul>
-      <li *ngFor="let h of config.openingHours">
-        {{ h.day }} :
-        <span *ngIf="h.isClosed">Ferme</span>
-        <span *ngIf="!h.isClosed">
-          {{ h.openMorning }}–{{ h.closeMorning }}, {{ h.openAfternoon }}–{{ h.closeAfternoon }}
-        </span>
-      </li>
-    </ul>
-  </footer>
+    <!-- En-tête / Hero -->
+    <header class="hero">
+      <h1>{{ config.profile.businessName }}</h1>
+      <p class="slogan">{{ config.profile.slogan }}</p>
+    </header>
+
+    <!-- Sections dynamiques (À propos, Galerie, etc.) -->
+    <section *ngFor="let section of config.sections; trackBy: trackBySection"
+             [id]="section.type === 'About' ? 'about' : (section.type === 'Gallery' ? 'gallery' : null)"
+             class="content-section" [ngClass]="section.type.toLowerCase()">
+      <h2>{{ section.title }}</h2>
+      <h3 *ngIf="section.subtitle">{{ section.subtitle }}</h3>
+      <p *ngIf="section.body" [innerHTML]="section.body"></p>
+
+      <!-- Galerie d'images -->
+      <div class="gallery" *ngIf="section.type === 'Gallery'">
+        <img *ngFor="let img of section.galleryImages" [src]="img" alt="Photo de la galerie" />
+      </div>
+    </section>
+
+    <!-- Produits / Services groupés par catégorie -->
+    <section id="products" class="products-section">
+      <h2>Nos Produits &amp; Services</h2>
+      <div *ngFor="let category of (groupProductsByCategory(config.products) | keyvalue)">
+        <h3>{{ category.key }}</h3>
+        <div class="product-grid">
+          <div class="product-card" *ngFor="let item of category.value">
+            <img [src]="item.imageUrl" [alt]="item.title" />
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.description }}</p>
+            <span class="price" *ngIf="item.price">
+              {{ item.price | currency:'EUR' }} / {{ item.priceUnit }}
+            </span>
+            <span class="price" *ngIf="!item.price">Sur devis</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section class="testimonials" *ngIf="config.testimonials.length">
+      <h2>Avis de nos clients</h2>
+      <div class="testimonial-card" *ngFor="let t of config.testimonials">
+        <p>&laquo; {{ t.comment }} &raquo;</p>
+        <strong>{{ t.authorName }}</strong> — {{ t.rating }}/5
+      </div>
+    </section>
+
+    <!-- Contact / Horaires -->
+    <footer id="contact" class="contact-section">
+      <h2>Nous contacter</h2>
+      <p>{{ config.profile.address }}, {{ config.profile.city }}</p>
+      <p>{{ config.profile.phone }} — {{ config.profile.email }}</p>
+      <ul>
+        <li *ngFor="let h of config.openingHours">
+          {{ h.day }} :
+          <span *ngIf="h.isClosed">Fermé</span>
+          <span *ngIf="!h.isClosed">
+            {{ h.openMorning }}–{{ h.closeMorning }}, {{ h.openAfternoon }}–{{ h.closeAfternoon }}
+          </span>
+        </li>
+      </ul>
+    </footer>
+  </div>
 </div>
 
 <div class="loading" *ngIf="isLoading">Chargement du site en cours...</div>

@@ -1,0 +1,14 @@
+<footer *ngIf="profile" id="contact" class="contact-section">
+  <h2>Nous contacter</h2>
+  <p>{{ profile.address }}, {{ profile.city }}</p>
+  <p>{{ profile.phone }} — {{ profile.email }}</p>
+  <ul>
+    <li *ngFor="let h of openingHours">
+      {{ h.day }} :
+      <span *ngIf="h.isClosed">Fermé</span>
+      <span *ngIf="!h.isClosed">
+        {{ h.openMorning }}–{{ h.closeMorning }}, {{ h.openAfternoon }}–{{ h.closeAfternoon }}
+      </span>
+    </li>
+  </ul>
+</footer>

@@ -1,0 +1,5 @@
+<section *ngIf="section" id="about" class="content-section about">
+  <h2>{{ section.title }}</h2>
+  <h3 *ngIf="section.subtitle">{{ section.subtitle }}</h3>
+  <p *ngIf="section.body" [innerHTML]="section.body"></p>
+</section>

@@ -1,7 +1,11 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PortfolioService } from '../../services/portfolio.service';
-import { PortfolioConfig, ContentSection, ProductOrService } from '../../models/portfolio-config.model';
+import { PortfolioConfig, ContentSection } from '../../models/portfolio-config.model';
+import { AboutComponent } from './about.component';
+import { GalleryComponent } from './gallery.component';
+import { ProductsComponent } from './products.component';
+import { ContactComponent } from './contact.component';
 
 /**
  * Page d'accueil dynamique : se construit entierement a partir de la
@@ -10,7 +14,7 @@ import { PortfolioConfig, ContentSection, ProductOrService } from '../../models/
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AboutComponent, GalleryComponent, ProductsComponent, ContactComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -18,7 +22,7 @@ export class HomeComponent implements OnInit {
   config?: PortfolioConfig;
   isLoading = true;
   errorMessage = '';
-  isMenuOpen = false; 
+  isMenuOpen = false;
 
   constructor(
     private portfolioService: PortfolioService,
@@ -51,15 +55,20 @@ export class HomeComponent implements OnInit {
     root.style.setProperty('--font-family-base', font);
   }
 
-  /** Regroupe les produits par categorie pour l'affichage en sections. */
-  groupProductsByCategory(products: ProductOrService[]): Record<string, ProductOrService[]> {
-    return products.reduce((groups, product) => {
-      (groups[product.category] ??= []).push(product);
-      return groups;
-    }, {} as Record<string, ProductOrService[]>);
+  get aboutSection(): ContentSection | undefined {
+    return this.config?.sections.find(section => section.type?.toLowerCase() === 'about');
   }
 
-  trackBySection(_index: number, section: ContentSection): string {
-    return section.title;
+  get gallerySection(): ContentSection | undefined {
+    return this.config?.sections.find(section => section.type?.toLowerCase() === 'gallery');
+  }
+
+  scrollToSection(sectionId: string, event: Event): void {
+    event.preventDefault();
+    this.isMenuOpen = false;
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

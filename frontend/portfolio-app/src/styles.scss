@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS par defaut, surchargees dynamiquement par le composant Home
+   en fonction des couleurs du BusinessProfile recu depuis l'API. */
+:root {
+  --color-primary: #2563EB;
+  --color-secondary: #F59E0B;
+  --font-family-base: Inter, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-base);
+}

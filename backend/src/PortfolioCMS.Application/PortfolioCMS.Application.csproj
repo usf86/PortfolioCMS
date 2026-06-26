@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>PortfolioCMS.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PortfolioCMS.Domain\PortfolioCMS.Domain.csproj" />
+    <ProjectReference Include="..\PortfolioCMS.Infrastructure\PortfolioCMS.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

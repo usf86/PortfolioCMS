@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-api",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/backend/src/PortfolioCMS.Api/PortfolioCMS.Api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "restore-backend",
+      "type": "shell",
+      "command": "dotnet restore ${workspaceFolder}/backend/PortfolioCMS.sln"
+    },
+    {
+      "label": "install-frontend",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/frontend/portfolio-app" }
+    },
+    {
+      "label": "serve-frontend",
+      "type": "shell",
+      "command": "npm start",
+      "options": { "cwd": "${workspaceFolder}/frontend/portfolio-app" },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "ef-migrations-add-InitialCreate",
+      "type": "shell",
+      "command": "dotnet ef migrations add InitialCreate --project ../PortfolioCMS.Infrastructure --startup-project .",
+      "options": { "cwd": "${workspaceFolder}/backend/src/PortfolioCMS.Api" }
+    },
+    {
+      "label": "ef-database-update",
+      "type": "shell",
+      "command": "dotnet ef database update --project ../PortfolioCMS.Infrastructure --startup-project .",
+      "options": { "cwd": "${workspaceFolder}/backend/src/PortfolioCMS.Api" }
+    }
+  ]
+}

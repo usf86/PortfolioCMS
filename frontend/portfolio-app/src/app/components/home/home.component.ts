@@ -8,8 +8,8 @@ import { ProductsComponent } from './products.component';
 import { ContactComponent } from './contact.component';
 
 /**
- * Page d'accueil dynamique : se construit entierement a partir de la
- * configuration metier recue de l'API (couleurs, sections, produits...).
+ * Page d'accueil : recupere la configuration et orchestre les sous-composants.
+ * La logique d'affichage de chaque section est deleguee aux composants enfants.
  */
 @Component({
   selector: 'app-home',
@@ -30,8 +30,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Exemple : le type d'activite pourrait venir d'une config d'environnement
-    // (deploiement dedie par client) ou d'un sous-domaine.
     const activityType = 'boulangerie'; // ou injecte dynamiquement
 
     this.portfolioService.getConfigByActivity(activityType).subscribe({
@@ -55,20 +53,23 @@ export class HomeComponent implements OnInit {
     root.style.setProperty('--font-family-base', font);
   }
 
-  get aboutSection(): ContentSection | undefined {
-    return this.config?.sections.find(section => section.type?.toLowerCase() === 'about');
+  /** Recupere la section 'About' parmi les sections dynamiques. */
+  get aboutSection() {
+    return this.config?.sections.find(s => s.type === 'About');
   }
 
-  get gallerySection(): ContentSection | undefined {
-    return this.config?.sections.find(section => section.type?.toLowerCase() === 'gallery');
+  /** Recupere la section 'Gallery' parmi les sections dynamiques. */
+  get gallerySection() {
+    return this.config?.sections.find(s => s.type === 'Gallery');
   }
 
+  /** Fait défiler vers une section ancrée dans la page. */
   scrollToSection(sectionId: string, event: Event): void {
     event.preventDefault();
-    this.isMenuOpen = false;
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.isMenuOpen = false;
     }
   }
 }

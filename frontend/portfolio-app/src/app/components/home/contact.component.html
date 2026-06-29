@@ -1,4 +1,5 @@
-<footer *ngIf="profile" id="contact" class="contact-section">
+<!-- src/app/components/contact/contact.component.html -->
+<footer class="contact-section" *ngIf="profile">
   <h2>Nous contacter</h2>
   <p>{{ profile.address }}, {{ profile.city }}</p>
   <p>{{ profile.phone }} — {{ profile.email }}</p>

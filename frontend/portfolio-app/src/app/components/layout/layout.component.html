@@ -1,0 +1,40 @@
+<nav class="sticky top-0 z-50 bg-white shadow-md">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <div class="flex items-center gap-2">
+        <img *ngIf="profile?.logoUrl" [src]="profile?.logoUrl" alt="Logo" class="h-10 w-10 object-contain" />
+        <span class="font-bold text-lg" style="color: var(--color-primary)">
+          {{ profile?.businessName }}
+        </span>
+      </div>
+
+      <!-- Liens desktop -->
+      <div class="hidden md:flex gap-8">
+        <a routerLink="/accueil" routerLinkActive="nav-active" class="text-gray-700 hover:text-[var(--color-primary)] transition">Accueil</a>
+        <a routerLink="/a-propos" routerLinkActive="nav-active" class="text-gray-700 hover:text-[var(--color-primary)] transition">À propos</a>
+        <a routerLink="/galerie" routerLinkActive="nav-active" class="text-gray-700 hover:text-[var(--color-primary)] transition">Galerie</a>
+        <a routerLink="/produits" routerLinkActive="nav-active" class="text-gray-700 hover:text-[var(--color-primary)] transition">Produits</a>
+        <a routerLink="/contact" routerLinkActive="nav-active" class="text-gray-700 hover:text-[var(--color-primary)] transition">Contact</a>
+      </div>
+
+      <button class="md:hidden text-2xl" (click)="isMenuOpen = !isMenuOpen" aria-label="Menu">
+        ☰
+      </button>
+    </div>
+
+    <!-- Menu mobile -->
+    <div *ngIf="isMenuOpen" class="md:hidden flex flex-col gap-3 pb-4">
+      <a routerLink="/accueil" routerLinkActive="nav-active" (click)="closeMenu()" class="text-gray-700">Accueil</a>
+      <a routerLink="/a-propos" routerLinkActive="nav-active" (click)="closeMenu()" class="text-gray-700">À propos</a>
+      <a routerLink="/galerie" routerLinkActive="nav-active" (click)="closeMenu()" class="text-gray-700">Galerie</a>
+      <a routerLink="/produits" routerLinkActive="nav-active" (click)="closeMenu()" class="text-gray-700">Produits</a>
+      <a routerLink="/contact" routerLinkActive="nav-active" (click)="closeMenu()" class="text-gray-700">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Le contenu de la page active s'affiche ici -->
+<main>
+  <router-outlet></router-outlet>
+</main>

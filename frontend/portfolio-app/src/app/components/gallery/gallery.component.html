@@ -1,0 +1,6 @@
+<section class="content-section" *ngIf="section">
+  <h2>{{ section.title }}</h2>
+  <div class="gallery">
+    <img *ngFor="let img of section.galleryImages" [src]="img" alt="Photo de la galerie" />
+  </div>
+</section>

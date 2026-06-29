@@ -1,0 +1,17 @@
+<section class="products-section" *ngIf="products.length">
+  <h2>Nos Produits &amp; Services</h2>
+  <div *ngFor="let category of (groupProductsByCategory(products) | keyvalue)">
+    <h3>{{ category.key }}</h3>
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let item of category.value">
+        <img [src]="item.imageUrl" [alt]="item.title" />
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.description }}</p>
+        <span class="price" *ngIf="item.price">
+          {{ item.price | currency:'EUR' }} / {{ item.priceUnit }}
+        </span>
+        <span class="price" *ngIf="!item.price">Sur devis</span>
+      </div>
+    </div>
+  </div>
+</section>

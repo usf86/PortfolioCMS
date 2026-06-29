@@ -1,14 +1,104 @@
-<section class="contact-section" *ngIf="profile">
+<!-- src/app/components/contact/contact.component.html -->
+<section class="contact-page" *ngIf="profile">
   <h2>Nous contacter</h2>
-  <p>{{ profile.address }}, {{ profile.city }}</p>
-  <p>{{ profile.phone }} — {{ profile.email }}</p>
-  <ul>
-    <li *ngFor="let h of openingHours">
-      {{ h.day }} :
-      <span *ngIf="h.isClosed">Fermé</span>
-      <span *ngIf="!h.isClosed">
-        {{ h.openMorning }}–{{ h.closeMorning }}, {{ h.openAfternoon }}–{{ h.closeAfternoon }}
-      </span>
-    </li>
-  </ul>
+
+  <div class="contact-grid">
+
+    <!-- ===== Colonne gauche : formulaire ===== -->
+    <div class="contact-form-wrapper">
+      <h3>Envoyez-nous un message</h3>
+
+      <form #contactNgForm="ngForm" (ngSubmit)="onSubmit(contactNgForm)" *ngIf="!isSubmitted">
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="contactForm.name"
+            required
+            minlength="2"
+            #nameField="ngModel"
+          />
+          <span class="form-error" *ngIf="nameField.invalid && nameField.touched">
+            Le nom doit contenir au moins 2 caractères.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="contactForm.email"
+            required
+            email
+            #emailField="ngModel"
+          />
+          <span class="form-error" *ngIf="emailField.invalid && emailField.touched">
+            Veuillez saisir une adresse email valide.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            [(ngModel)]="contactForm.message"
+            required
+            minlength="10"
+            #messageField="ngModel"
+          ></textarea>
+          <span class="form-error" *ngIf="messageField.invalid && messageField.touched">
+            Le message doit contenir au moins 10 caractères.
+          </span>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="contactNgForm.invalid">
+          Envoyer
+        </button>
+      </form>
+
+      <div class="confirmation" *ngIf="isSubmitted">
+        ✅ Merci, votre message a été pris en compte. Nous vous répondrons rapidement.
+      </div>
+    </div>
+
+    <!-- ===== Colonne droite : carte + adresse + horaires ===== -->
+    <div class="contact-info-wrapper">
+
+      <div class="map-container" *ngIf="safeMapUrl">
+        <iframe
+          [src]="safeMapUrl"
+          width="100%"
+          height="300"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <div class="info-block">
+        <h3>Adresse</h3>
+        <p>{{ profile.address }}, {{ profile.city }}</p>
+        <p>{{ profile.phone }} — {{ profile.email }}</p>
+      </div>
+
+      <div class="info-block">
+        <h3>Horaires d'ouverture</h3>
+        <ul>
+          <li *ngFor="let h of openingHours">
+            <span class="day">{{ h.day }}</span>
+            <span *ngIf="h.isClosed">Fermé</span>
+            <span *ngIf="!h.isClosed">
+              {{ h.openMorning }}–{{ h.closeMorning }}, {{ h.openAfternoon }}–{{ h.closeAfternoon }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>

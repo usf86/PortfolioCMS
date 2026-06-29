@@ -47,7 +47,8 @@ public class PortfolioService : IPortfolioService
                 Phone = profile.Phone,
                 Email = profile.Email,
                 FacebookUrl = profile.FacebookUrl,
-                InstagramUrl = profile.InstagramUrl
+                InstagramUrl = profile.InstagramUrl,
+                GoogleMapsEmbedUrl = profile.GoogleMapsEmbedUrl
             },
             OpeningHours = profile.OpeningHours.Select(o => new OpeningHourDto
             {

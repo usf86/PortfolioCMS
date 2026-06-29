@@ -14,6 +14,7 @@ export interface BusinessProfile {
   email?: string;
   facebookUrl?: string;
   instagramUrl?: string;
+  googleMapsEmbedUrl?: string;
 }
 
 export interface OpeningHour {

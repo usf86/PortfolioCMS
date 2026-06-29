@@ -29,6 +29,7 @@ public class BusinessProfileDto
     public string? Email { get; set; }
     public string? FacebookUrl { get; set; }
     public string? InstagramUrl { get; set; }
+    public string? GoogleMapsEmbedUrl { get; set; }
 }
 
 public class OpeningHourDto

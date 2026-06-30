@@ -1,24 +1,320 @@
-.portfolio-wrapper {
-  font-family: var(--font-family-base, sans-serif);
-  padding: 0 1.5rem;
+// src/app/components/home/home.component.scss
 
-  .hero {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 4rem 2rem;
-    text-align: center;
-    margin: 0 -1.5rem;
+// ============ HERO ============
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  background-image: linear-gradient(135deg, var(--color-primary), color-mix(in srgb, var(--color-primary) 70%, black));
+  overflow: hidden;
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.08), transparent 60%);
   }
 
-  .testimonial-card {
-    border-left: 4px solid var(--color-secondary);
-    padding: 0.5rem 1rem;
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 2rem 1.5rem;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-secondary);
     margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hero-slogan {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .hero-title { font-size: 2.1rem; }
+    .hero-slogan { font-size: 1.05rem; }
   }
 }
 
+// ============ BOUTONS COMMUNS ============
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: #1f2937;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4);
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: white;
+  border: 2px solid rgba(255,255,255,0.5);
+  padding: 0.8rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+}
+
+// ============ EN-TETES DE SECTION (reutilises) ============
+.section-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+
+  .section-eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+}
+
+// ============ PRODUITS VEDETTES ============
+.featured-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featured-card {
+  background: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -8px rgba(0,0,0,0.12);
+  transition: transform 0.25s, box-shadow 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,0.2);
+  }
+
+  .featured-image-wrapper {
+    height: 180px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+  }
+
+  &:hover .featured-image-wrapper img {
+    transform: scale(1.06);
+  }
+
+  h3 {
+    margin: 1rem 1rem 0.25rem;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0 1rem 0.75rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+
+  .featured-price {
+    display: block;
+    margin: 0 1rem 1rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+
+    .unit {
+      font-weight: 400;
+      color: #9ca3af;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.featured-cta {
+  text-align: center;
+  margin-top: 2.5rem;
+
+  .link-arrow {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ============ VALEURS / ATOUTS ============
+.values-section {
+  background-color: #faf9f7;
+  padding: 4rem 1.5rem;
+}
+
+.values-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.value-card {
+  .value-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+// ============ TEMOIGNAGES ============
+.testimonials-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.testimonial-card {
+  background: white;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px -6px rgba(0,0,0,0.1);
+
+  .testimonial-rating {
+    margin-bottom: 0.75rem;
+
+    .star {
+      color: #e5e7eb;
+      font-size: 1.1rem;
+
+      &.filled {
+        color: var(--color-secondary);
+      }
+    }
+  }
+
+  .testimonial-text {
+    font-style: italic;
+    color: #374151;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .testimonial-author {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+  }
+}
+
+// ============ CTA FINAL ============
+.cta-section {
+  text-align: center;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 4rem 1.5rem;
+
+  h2 {
+    font-size: 1.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// ============ ETATS ============
 .loading, .error {
   text-align: center;
-  padding: 3rem;
+  padding: 4rem;
   font-size: 1.2rem;
 }

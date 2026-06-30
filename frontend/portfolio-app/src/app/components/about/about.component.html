@@ -1,5 +1,25 @@
-<section class="content-section" *ngIf="section">
-  <h2>{{ section.title }}</h2>
-  <h3 *ngIf="section.subtitle">{{ section.subtitle }}</h3>
-  <p *ngIf="section.body" [innerHTML]="section.body"></p>
+<!-- src/app/components/about/about.component.html -->
+<section class="about-page" *ngIf="section">
+
+  <div class="about-grid">
+
+    <!-- ===== Colonne image ===== -->
+    <div class="about-image-wrapper" *ngIf="section.imageUrl">
+      <img [src]="section.imageUrl" alt="Notre savoir-faire" class="about-image" />
+      <div class="about-image-accent"></div>
+    </div>
+
+    <!-- ===== Colonne texte ===== -->
+    <div class="about-content">
+      <span class="about-eyebrow">Notre histoire</span>
+      <h2 class="about-title">{{ section.title }}</h2>
+      <p class="about-subtitle" *ngIf="section.subtitle">{{ section.subtitle }}</p>
+
+      <blockquote class="about-quote" *ngIf="section.body">
+        <span class="quote-mark">“</span>
+        <p [innerHTML]="section.body"></p>
+      </blockquote>
+    </div>
+
+  </div>
 </section>

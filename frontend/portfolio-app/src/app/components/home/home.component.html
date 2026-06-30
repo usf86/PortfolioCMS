@@ -1,16 +1,91 @@
-<div *ngIf="!isLoading && profile" class="portfolio-wrapper">
+<!-- src/app/components/home/home.component.html -->
+<div *ngIf="!isLoading && profile">
+
+  <!-- ============ HERO ============ -->
   <header class="hero">
-    <h1>{{ profile.businessName }}</h1>
-    <p class="slogan">{{ profile.slogan }}</p>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">{{ profile.city }}</span>
+      <h1 class="hero-title">{{ profile.businessName }}</h1>
+      <p class="hero-slogan">{{ profile.slogan }}</p>
+      <div class="hero-actions">
+        <a routerLink="/produits" class="btn-primary">Découvrir nos produits</a>
+        <a routerLink="/contact" class="btn-secondary">Nous contacter</a>
+      </div>
+    </div>
   </header>
 
-  <section class="testimonials" *ngIf="testimonials.length">
-    <h2>Avis de nos clients</h2>
-    <div class="testimonial-card" *ngFor="let t of testimonials">
-      <p>&laquo; {{ t.comment }} &raquo;</p>
-      <strong>{{ t.authorName }}</strong> — {{ t.rating }}/5
+  <!-- ============ PRODUITS VEDETTES ============ -->
+  <section class="featured-section" *ngIf="featuredProducts.length">
+    <div class="section-header">
+      <span class="section-eyebrow">Nos incontournables</span>
+      <h2 class="section-title">Ce que nos clients préfèrent</h2>
+    </div>
+
+    <div class="featured-grid">
+      <div class="featured-card" *ngFor="let item of featuredProducts">
+        <div class="featured-image-wrapper">
+          <img [src]="item.imageUrl" [alt]="item.title" />
+        </div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+        <span class="featured-price" *ngIf="item.price">
+          {{ item.price | currency:'EUR' }} <span class="unit">/ {{ item.priceUnit }}</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="featured-cta">
+      <a routerLink="/produits" class="link-arrow">Voir tous nos produits →</a>
     </div>
   </section>
+
+  <!-- ============ POURQUOI NOUS CHOISIR ============ -->
+  <section class="values-section">
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🌾</div>
+        <h3>Ingrédients locaux</h3>
+        <p>Une sélection rigoureuse de farines et produits issus de producteurs de la région.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔥</div>
+        <h3>Savoir-faire artisanal</h3>
+        <p>Chaque création est façonnée à la main, sans raccourci, dans le respect de la tradition.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⏱️</div>
+        <h3>Fraîcheur garantie</h3>
+        <p>Préparé chaque jour sur place, pour une qualité constante et un goût authentique.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEMOIGNAGES ============ -->
+  <section class="testimonials-section" *ngIf="testimonials.length">
+    <div class="section-header">
+      <span class="section-eyebrow">Ils nous font confiance</span>
+      <h2 class="section-title">Avis de nos clients</h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <div class="testimonial-rating">
+          <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= t.rating">★</span>
+        </div>
+        <p class="testimonial-text">« {{ t.comment }} »</p>
+        <span class="testimonial-author">{{ t.authorName }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALL TO ACTION FINAL ============ -->
+  <section class="cta-section">
+    <h2>Envie de nous rendre visite ?</h2>
+    <p>Retrouvez-nous à {{ profile.address }}, {{ profile.city }}</p>
+    <a routerLink="/contact" class="btn-primary">Voir nos horaires &amp; nous contacter</a>
+  </section>
+
 </div>
 
 <div class="loading" *ngIf="isLoading">Chargement du site en cours...</div>

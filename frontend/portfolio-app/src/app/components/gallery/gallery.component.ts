@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/components/gallery/gallery.component.ts
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PortfolioService } from '../../services/portfolio.service';
 import { ContentSection } from '../../models/portfolio-config.model';
@@ -8,6 +9,7 @@ import { ContentSection } from '../../models/portfolio-config.model';
   selector: 'app-gallery',
   standalone: true,
   imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],   // ← necessaire pour <swiper-container>/<swiper-slide>
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss']
 })

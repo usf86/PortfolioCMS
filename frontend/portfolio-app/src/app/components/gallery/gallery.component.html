@@ -1,6 +1,18 @@
+<!-- src/app/components/gallery/gallery.component.html -->
 <section class="content-section" *ngIf="section">
   <h2>{{ section.title }}</h2>
-  <div class="gallery">
-    <img *ngFor="let img of section.galleryImages" [src]="img" alt="Photo de la galerie" />
-  </div>
+
+  <swiper-container
+    class="gallery-swiper"
+    slides-per-view="1"
+    space-between="0"
+    autoplay-delay="3500"
+    autoplay-disable-on-interaction="false"
+    pagination="true"
+    navigation="true"
+  >
+    <swiper-slide *ngFor="let img of section.galleryImages">
+      <img [src]="img" alt="Photo de la galerie" />
+    </swiper-slide>
+  </swiper-container>
 </section>
